@@ -1,7 +1,8 @@
-package ru.ahoy.customweather
+package ru.ahoy.customweather.presentation.ui.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import ru.ahoy.customweather.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
