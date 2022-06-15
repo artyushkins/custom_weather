@@ -2,14 +2,14 @@ package ru.ahoy.data.network
 
 import retrofit2.http.GET
 import retrofit2.http.Query
-import ru.ahoy.data.network.models.responses.ResponseCurrent
+import ru.ahoy.domain.models.Weather
 
 interface WeatherService {
 
     @GET("/current.json")
-    suspend fun getCurrentWeatherByLatLong(@Query("q") latLong: String): ResponseCurrent
+    suspend fun getWeatherByLatLong(@Query("q") latLong: String): Weather
 
     @GET("/current.json")
-    suspend fun getCurrentWeatherByCity(@Query("q") city: String): ResponseCurrent
+    suspend fun getCurrentWeatherByCity(@Query("q") city: String): Weather
 
 }

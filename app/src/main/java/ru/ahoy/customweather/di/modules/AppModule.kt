@@ -6,4 +6,4 @@ private val appModule = module {
 
 }
 
-val allModules = listOf(dataModule, domainModule, appModule)
+val allModules = listOf(dataModule, domainModule, appModule, apiModule)

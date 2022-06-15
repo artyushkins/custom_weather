@@ -1,4 +1,4 @@
-package ru.ahoy.data.network.models
+package ru.ahoy.domain.models
 
 import com.google.gson.annotations.SerializedName
 

@@ -1,5 +1,7 @@
 package ru.ahoy.domain.repository
 
+import ru.ahoy.domain.models.Weather
+
 interface WeatherRepository {
-    fun getCurrentWeatherByLatLong()
+    suspend fun getWeatherByLatLong(latLong: String): Weather
 }
