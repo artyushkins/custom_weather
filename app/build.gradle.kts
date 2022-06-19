@@ -1,5 +1,7 @@
 plugins {
     id("com.android.application")
+    kotlin("android")
+    kotlin("android.extensions")
 }
 
 android {
@@ -17,6 +19,11 @@ android {
 
     buildFeatures {
         viewBinding = true
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
 }
 

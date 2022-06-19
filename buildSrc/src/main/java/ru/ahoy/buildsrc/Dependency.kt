@@ -4,6 +4,7 @@ val allDependency = listOf(
     Kotlin.all,
     Lifecycle.all,
     AndroidX.all,
+    Libs.all
 )
 
 object DI {
@@ -55,4 +56,10 @@ object AndroidX {
     const val material = "com.google.android.material:material:1.5.0-alpha04"
 
     val all = listOf(core, appCompat, material)
+}
+
+object Libs {
+    const val dotsIndicator =  "com.tbuonomo:dotsindicator:4.3"
+
+    val all = listOf(dotsIndicator)
 }
