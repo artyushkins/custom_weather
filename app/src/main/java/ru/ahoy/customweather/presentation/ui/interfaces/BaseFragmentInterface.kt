@@ -1,0 +1,3 @@
+package ru.ahoy.customweather.presentation.ui.interfaces
+
+interface BaseFragmentInterface
