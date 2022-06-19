@@ -6,36 +6,35 @@
     android:background="@color/colorBackground"
     android:orientation="vertical">
 
-    <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
-        android:layout_marginTop="16dp"
-        android:id="@+id/dotsIndicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="48dp"
-        app:dotsColor="@color/colorTextSecondary"
-        app:dotsSize="8dp"
-        app:dotsSpacing="4dp"
-        app:selectedDotColor="@color/colorPrimary" />
-
     <FrameLayout
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_gravity="center"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:background="@color/colorFloatBackground" />
 
     <TextView
+        android:id="@+id/region"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:drawableEnd="@drawable/ic_vector"
+        android:fontFamily="@font/poppins_semibold"
+        android:includeFontPadding="false"
+        android:textColor="@color/colorTextHeader"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/city"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:drawablePadding="4dp"
         android:fontFamily="@font/poppins_semibold"
         android:includeFontPadding="false"
-        android:text="Moscow"
         android:textColor="@color/colorTextHeader"
-        android:textSize="30sp" />
+        android:textSize="32sp"
+        app:drawableEndCompat="@drawable/ic_vector" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -44,12 +43,12 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/temp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/poppins_semibold"
             android:includeFontPadding="false"
-            android:text="31"
             android:textColor="@color/colorTextHeader"
             android:textSize="70sp" />
 
@@ -65,9 +64,9 @@
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_marginHorizontal="24dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
         android:background="@drawable/corners_default"
         android:backgroundTint="@color/colorFloatBackground"
         android:paddingVertical="12dp">
@@ -88,14 +87,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
-                android:text="TIME"
+                android:text="Update time"
                 android:textColor="@color/colorTextSecondary" />
 
             <TextView
+                android:id="@+id/timeText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
-                android:text="11:25 AM"
                 android:textColor="@color/colorText" />
 
         </LinearLayout>
@@ -115,14 +114,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
-                android:text="TIME"
+                android:text="UV"
                 android:textColor="@color/colorTextSecondary" />
 
             <TextView
+                android:id="@+id/uvText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
-                android:text="11:25 AM"
                 android:textColor="@color/colorText" />
 
         </LinearLayout>
@@ -134,7 +133,7 @@
             android:gravity="center"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/aq"
+            app:layout_constraintEnd_toStartOf="@id/humidity"
             app:layout_constraintStart_toEndOf="@id/uv"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -142,20 +141,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
-                android:text="TIME"
+                android:text="Rain"
                 android:textColor="@color/colorTextSecondary" />
 
             <TextView
+                android:id="@+id/rainText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
-                android:text="11:25 AM"
                 android:textColor="@color/colorText" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/aq"
+            android:id="@+id/humidity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -169,14 +168,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
-                android:text="TIME"
+                android:text="Humidity"
                 android:textColor="@color/colorTextSecondary" />
 
             <TextView
+                android:id="@+id/humidityText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
-                android:text="11:25 AM"
                 android:textColor="@color/colorText" />
 
         </LinearLayout>

@@ -68,7 +68,7 @@ class VerticalViewPagerFragment : Fragment(), IVerticalViewPager {
 
     inner class ViewPagerAdapter : FragmentStateAdapter(parentFragmentManager, lifecycle) {
 
-        private val fragmentList = listOf(SearchFragment(), WeatherFragment(), CitiesFragment())
+        private val fragmentList = listOf(SearchFragment(), HorizontalViewPagerFragment(), CitiesFragment())
 
         override fun getItemCount(): Int = fragmentList.size
 

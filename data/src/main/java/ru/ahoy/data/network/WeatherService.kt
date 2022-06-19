@@ -6,10 +6,10 @@ import ru.ahoy.domain.models.Weather
 
 interface WeatherService {
 
-    @GET("/current.json")
-    suspend fun getWeatherByLatLong(@Query("q") latLong: String): Weather
+    @GET("v1/current.json")
+    suspend fun getWeather(@Query("q") latLong: String): Weather
 
-    @GET("/current.json")
+    @GET("v1/current.json")
     suspend fun getCurrentWeatherByCity(@Query("q") city: String): Weather
 
 }

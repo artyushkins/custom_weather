@@ -16,7 +16,7 @@ data class Location(
     var lat: Double? = null,
 
     @SerializedName("lon")
-    var lon: Int? = null,
+    var lon: Double? = null,
 
     @SerializedName("tz_id")
     var tzId: String? = null,

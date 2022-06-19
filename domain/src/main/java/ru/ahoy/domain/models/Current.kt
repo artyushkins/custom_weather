@@ -70,5 +70,5 @@ data class Current(
     var gustMph: Double? = null,
 
     @SerializedName("gust_kph")
-    var gustKph: Int? = null
+    var gustKph: Double? = null
 )

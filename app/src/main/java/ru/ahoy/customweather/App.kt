@@ -12,11 +12,9 @@ class App : Application() {
         super.onCreate()
 
         startKoin {
-            startKoin {
-                androidLogger(if (BuildConfig.DEBUG) Level.ERROR else Level.NONE)
-                androidContext(this@App)
-                modules(allModules)
-            }
+            androidLogger(if (BuildConfig.DEBUG) Level.ERROR else Level.NONE)
+            androidContext(this@App)
+            modules(allModules)
         }
     }
 }

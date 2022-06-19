@@ -34,6 +34,8 @@ object NetworkModule {
         override fun intercept(chain: Interceptor.Chain): Response {
             val url = chain.request().url.newBuilder()
                 .addQueryParameter("key", apiKey)
+                .addQueryParameter("lang", "ru")
+                .addQueryParameter("aqi", "yes")
                 .build()
 
             return chain.proceed(chain.request().newBuilder().url(url).build())
