@@ -6,13 +6,13 @@
     android:background="@color/colorBackground"
     android:orientation="vertical">
 
-    <FrameLayout
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+    <ru.ahoy.customweather.presentation.ui.views.WeatherView
+        android:id="@+id/weather"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:background="@color/colorFloatBackground" />
+        android:layout_marginBottom="16dp" />
 
     <TextView
         android:id="@+id/region"
