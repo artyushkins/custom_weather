@@ -1,7 +1,6 @@
 package ru.ahoy.customweather.presentation.ui.activity
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
@@ -14,9 +13,11 @@ import ru.ahoy.customweather.extension.showFragment
 import ru.ahoy.customweather.extension.viewBinding
 import ru.ahoy.customweather.presentation.ui.fragment.VerticalFragment
 import ru.ahoy.customweather.presentation.ui.fragment.VerticalViewPagerFragment
+import ru.ahoy.customweather.presentation.ui.interfaces.IMainActivity
 import ru.ahoy.customweather.presentation.ui.interfaces.IVerticalViewPager
+import ru.ahoy.customweather.presentation.ui.interfaces.IWeatherFragment
 
-class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
+class MainActivity : AppCompatActivity(), IMainActivity {
 
     private val binding by viewBinding(ActivityMainBinding::class)
     private val searchView: SearchView by lazy { binding.searchView }
@@ -31,28 +32,38 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
     private fun init(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
             showFragment(VerticalViewPagerFragment())
-
             binding.mainMenu.setOnClickListener {
-                if (verticalViewPager.getCurrentFragment() == VerticalFragment.Weather) {
-                    verticalViewPager.showCitiesFragment(show = true)
-                } else {
-                    verticalViewPager.showCitiesFragment(show = false)
+                when (verticalViewPager.getCurrentFragment()) {
+                    VerticalFragment.Weather -> {
+                        if (findFragment<IWeatherFragment>().isStandalone) {
+                            verticalViewPager.showCitiesFragment(show = true)
+                        } else {
+                            supportFragmentManager.popBackStack()
+                            binding.mainMenu.icon = AppCompatResources.getDrawable(this@MainActivity, R.drawable.ic_menu)
+                        }
+                    }
+                    else -> verticalViewPager.showCitiesFragment(show = false)
                 }
             }
-            searchView.setOnQueryTextListener(this)
             searchView.setOnQueryTextFocusChangeListener { _, isFocused ->
                 if (isFocused) {
                     if (verticalViewPager.getCurrentFragment() == VerticalFragment.Cities) {
 //                        showFragment(SearchFragment(), isAdd = true)
                     } else {
-                        showSearchFragment()
+                        if (findFragment<IWeatherFragment>().isStandalone) {
+                            supportFragmentManager.popBackStack()
+                        } else {
+                            showSearchFragment()
+                        }
                     }
                 } else {
                     if (verticalViewPager.getCurrentFragment() == VerticalFragment.Cities) {
 //                        closeFragment()
                     } else {
-                        searchView.setQuery("", false)
-                        hideSearchFragment()
+                        if (!findFragment<IWeatherFragment>().isStandalone) {
+                            searchView.setQuery("", false)
+                            hideSearchFragment()
+                        }
                     }
                 }
             }
@@ -91,12 +102,12 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         binding.mainMenu.isVisible = true
     }
 
-    override fun onQueryTextSubmit(query: String?): Boolean {
-        return true
+    override fun setQueryTextListener(listener: SearchView.OnQueryTextListener?) {
+        searchView.setOnQueryTextListener(listener)
     }
 
-    override fun onQueryTextChange(newText: String?): Boolean {
-        Log.e("sdsd", newText.toString())
-        return false
+    override fun onShowWeatherFromSearch() {
+        searchView.clearFocus()
+        binding.mainMenu.icon = AppCompatResources.getDrawable(this@MainActivity, R.drawable.ic_close)
     }
 }

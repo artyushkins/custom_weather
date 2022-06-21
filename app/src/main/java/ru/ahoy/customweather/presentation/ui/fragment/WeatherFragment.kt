@@ -3,31 +3,54 @@ package ru.ahoy.customweather.presentation.ui.fragment
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.ahoy.customweather.databinding.FragmentWeatherBinding
 import ru.ahoy.customweather.extension.viewBinding
+import ru.ahoy.customweather.presentation.ui.interfaces.IWeatherFragment
 import ru.ahoy.customweather.presentation.ui.views.WeatherView
+import ru.ahoy.customweather.presentation.viewmodel.WeatherViewModel
 import ru.ahoy.domain.models.Weather
 import ru.ahoy.domain.models.toJson
 
-class WeatherFragment : BaseFragment() {
+class WeatherFragment : BaseFragment(), IWeatherFragment {
 
     companion object {
         private const val key_weather = "weather"
+        private const val key_name = "name"
 
-        fun newInstance(weather: Weather?): WeatherFragment =
+        fun newInstance(weather: Weather?, id: String? = null): WeatherFragment =
             WeatherFragment().apply {
-                arguments = bundleOf(key_weather to weather?.toJson())
+                arguments = bundleOf(key_weather to weather?.toJson(), key_name to id)
             }
     }
 
-    private val weather by lazy { Weather.fromJson(arguments?.getString(key_weather)) }
     override val binding by viewBinding(FragmentWeatherBinding::class)
+    override val isStandalone: Boolean get() = arguments?.getString(key_name) != null
+    override val fragment: Fragment get() = this
+    private val weather by lazy { Weather.fromJson(arguments?.getString(key_weather) ?: return@lazy null) }
+    private val viewModel by viewModel<WeatherViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        weather?.let { weather ->
+            initWeather(weather)
+        } ?: run {
+            viewModel.getWeatherByName(arguments?.getString(key_name))
+            lifecycleScope.launchWhenCreated {
+                viewModel.weather.collect { weather ->
+                    weather?.let(this@WeatherFragment::initWeather)
+                    activity.onShowWeatherFromSearch()
+                }
+            }
+        }
+    }
+
+    private fun initWeather(weather: Weather) {
         binding.region.text = weather.location?.region
         binding.city.text = weather.location?.name
-        binding.temp.text = weather.current?.tempC.toString()
+        binding.tempLayout.temp.text = weather.current?.tempC.toString()
         binding.timeText.text = weather.current?.lastUpdated?.split(" ")?.get(1).orEmpty()
         binding.uvText.text = weather.current?.uv.toString()
         binding.humidityText.text = weather.current?.humidity.toString()

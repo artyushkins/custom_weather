@@ -2,8 +2,8 @@ package ru.ahoy.customweather.di.modules
 
 import org.koin.dsl.module
 import ru.ahoy.customweather.Constants
-import ru.ahoy.data.network.NetworkRepositoryImpl
 import ru.ahoy.data.network.di.NetworkModule
+import ru.ahoy.data.repository.NetworkRepositoryImpl
 import ru.ahoy.domain.repository.WeatherRepository
 
 val dataModule = module {

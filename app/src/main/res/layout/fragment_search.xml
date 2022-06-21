@@ -1,8 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorFloatBackground"
+    android:background="@color/colorBackground"
     android:orientation="vertical">
+
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/recent"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:clipToPadding="false"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:paddingStart="16dp"-->
+<!--        android:layout_marginBottom="16dp"-->
+<!--        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
+<!--        tools:ignore="RtlSymmetry"-->
+<!--        tools:listitem="@layout/list_item_search_recent" />-->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:overScrollMode="never"
+        android:id="@+id/cities"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="false"
+        android:layout_marginBottom="16dp"
+        tools:listitem="@layout/list_item_search_city" />
 
 </LinearLayout>

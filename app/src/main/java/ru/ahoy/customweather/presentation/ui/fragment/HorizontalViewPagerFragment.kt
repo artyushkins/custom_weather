@@ -17,6 +17,7 @@ import ru.ahoy.domain.models.Weather
 class HorizontalViewPagerFragment : BaseFragment() {
 
     override val binding by viewBinding(FragmentWeatherViewpagerBinding::class)
+    override val fragment: Fragment get() = this
     private val viewModel by viewModel<WeatherViewModel>()
     private val viewPager: ViewPager2 by lazy { binding.viewPager }
     private var weatherList = listOf<Weather?>()

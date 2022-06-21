@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:theme="@style/Base.Theme.CustomWeather"
+    android:background="@color/colorBackground"
     tools:context=".presentation.ui.activity.MainActivity">
 
     <LinearLayout
@@ -11,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:layout_marginBottom="16dp"
         android:animateLayoutChanges="true"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@id/fragmentContainer"
@@ -20,7 +21,7 @@
         <androidx.appcompat.widget.SearchView
             android:id="@+id/searchView"
             style="@style/AppSearchView"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:iconifiedByDefault="false"
@@ -37,7 +38,6 @@
             android:focusable="true"
             android:insetTop="0dp"
             android:insetBottom="0dp"
-            app:backgroundTint="@color/colorFloatBackground"
             app:cornerRadius="16dp"
             app:icon="@drawable/ic_menu"
             app:iconGravity="textStart"

@@ -6,8 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.IntRange
 import androidx.fragment.app.Fragment
+import androidx.viewbinding.ViewBinding
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import ru.ahoy.customweather.databinding.FragmentStubBinding
+import ru.ahoy.customweather.extension.viewBinding
 import ru.ahoy.customweather.presentation.ui.interfaces.IVerticalViewPager
 import kotlin.math.abs
 
@@ -17,7 +20,7 @@ sealed class VerticalFragment(val position: Int) {
     object Cities : VerticalFragment(position = 2)
 }
 
-class VerticalViewPagerFragment : Fragment(), IVerticalViewPager {
+class VerticalViewPagerFragment : BaseFragment(), IVerticalViewPager {
 
     companion object {
         fun getVerticalFragment(@IntRange(from = 0, to = 2) position: Int): VerticalFragment {
@@ -30,6 +33,8 @@ class VerticalViewPagerFragment : Fragment(), IVerticalViewPager {
         }
     }
 
+    override val fragment: Fragment get() = this
+    override val binding: ViewBinding by viewBinding(FragmentStubBinding::class) // Stub
     private val viewPager: ViewPager2 by lazy { ViewPager2(requireContext()) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -88,7 +93,7 @@ class VerticalViewPagerFragment : Fragment(), IVerticalViewPager {
                         val value = 1 - abs(position)
                         scaleX = minScale.coerceAtLeast(value)
                         scaleY = minScale.coerceAtLeast(value)
-                        alpha = 1 - abs(position * 3f)
+                        alpha = 1 - abs(position * 30f)
                     }
                     else -> alpha = 0f
                 }

@@ -5,15 +5,26 @@
       <map>
         <entry key="..\:/Users/Sergey/AndroidStudioProjects/Customweather/app/src/main/res/drawable/corners_default.xml" value="0.19" />
         <entry key="..\:/Users/Sergey/AndroidStudioProjects/Customweather/app/src/main/res/drawable/corners_default_ripple.xml" value="0.121" />
+        <entry key="..\:/Users/Sergey/AndroidStudioProjects/Customweather/app/src/main/res/drawable/corners_small.xml" value="0.2" />
+        <entry key="..\:/Users/Sergey/AndroidStudioProjects/Customweather/app/src/main/res/drawable/corners_small_ripple.xml" value="0.2" />
         <entry key="..\:/Users/Sergey/AndroidStudioProjects/Customweather/app/src/main/res/drawable/ic_menu_animation.xml" value="0.176" />
         <entry key="..\:/Users/Sergey/AndroidStudioProjects/Customweather/app/src/main/res/drawable/weather_clouds_1.xml" value="0.187" />
         <entry key="..\:/Users/Sergey/AndroidStudioProjects/Customweather/app/src/main/res/drawable/weather_clouds_3.xml" value="0.187" />
+        <entry key="..\:/Users/Sergey/AndroidStudioProjects/Customweather/app/src/main/res/font/poppins.xml" value="0.37037037037037035" />
+        <entry key="..\:/Users/Sergey/AndroidStudioProjects/Customweather/app/src/main/res/font/poppins_bold.xml" value="0.37037037037037035" />
         <entry key="..\:/Users/Sergey/AndroidStudioProjects/Customweather/app/src/main/res/font/poppins_medium.xml" value="0.14010416666666667" />
-        <entry key="..\:/Users/Sergey/AndroidStudioProjects/Customweather/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Users/Sergey/AndroidStudioProjects/Customweather/app/src/main/res/font/poppins_semibold.xml" value="0.37037037037037035" />
+        <entry key="..\:/Users/Sergey/AndroidStudioProjects/Customweather/app/src/main/res/font/poppins_thin.xml" value="0.37037037037037035" />
+        <entry key="..\:/Users/Sergey/AndroidStudioProjects/Customweather/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Users/Sergey/AndroidStudioProjects/Customweather/app/src/main/res/layout/fragment_cities.xml" value="0.1" />
-        <entry key="..\:/Users/Sergey/AndroidStudioProjects/Customweather/app/src/main/res/layout/fragment_search.xml" value="0.24635416666666668" />
-        <entry key="..\:/Users/Sergey/AndroidStudioProjects/Customweather/app/src/main/res/layout/fragment_weather.xml" value="0.25" />
-        <entry key="..\:/Users/Sergey/AndroidStudioProjects/Customweather/app/src/main/res/layout/fragment_weather_viewpager.xml" value="0.1" />
+        <entry key="..\:/Users/Sergey/AndroidStudioProjects/Customweather/app/src/main/res/layout/fragment_search.xml" value="0.25" />
+        <entry key="..\:/Users/Sergey/AndroidStudioProjects/Customweather/app/src/main/res/layout/fragment_stub.xml" value="0.3625" />
+        <entry key="..\:/Users/Sergey/AndroidStudioProjects/Customweather/app/src/main/res/layout/fragment_weather.xml" value="0.33" />
+        <entry key="..\:/Users/Sergey/AndroidStudioProjects/Customweather/app/src/main/res/layout/fragment_weather_viewpager.xml" value="0.18" />
+        <entry key="..\:/Users/Sergey/AndroidStudioProjects/Customweather/app/src/main/res/layout/include_temp_layout.xml" value="0.3625" />
+        <entry key="..\:/Users/Sergey/AndroidStudioProjects/Customweather/app/src/main/res/layout/list_item_city.xml" value="0.3625" />
+        <entry key="..\:/Users/Sergey/AndroidStudioProjects/Customweather/app/src/main/res/layout/list_item_search_city.xml" value="0.33" />
+        <entry key="..\:/Users/Sergey/AndroidStudioProjects/Customweather/app/src/main/res/layout/list_item_search_recent.xml" value="1.1" />
       </map>
     </option>
   </component>

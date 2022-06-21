@@ -1,9 +1,11 @@
 package ru.ahoy.customweather.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -18,6 +20,12 @@ class WeatherViewModel(private val getWeatherUseCase: GetWeatherUseCase) : ViewM
 
     suspend fun getWeatherByIP() = withContext(Dispatchers.IO) {
         _weather.value = getWeatherUseCase.execute(getNetworkIPAddress())
+    }
+
+    fun getWeatherByName(name: String?) {
+        viewModelScope.launch {
+            _weather.value = getWeatherUseCase.execute(name.orEmpty())
+        }
     }
 
     private fun getNetworkIPAddress(): String {

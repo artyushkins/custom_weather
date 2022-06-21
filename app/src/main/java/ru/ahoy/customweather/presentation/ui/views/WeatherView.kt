@@ -62,12 +62,6 @@ class WeatherView : androidx.appcompat.widget.AppCompatImageView {
         return AppCompatResources.getDrawable(context, id)
     }
 
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val width = MeasureSpec.makeMeasureSpec(200.dp(), MeasureSpec.EXACTLY)
-        val height = MeasureSpec.makeMeasureSpec(200.dp(), MeasureSpec.EXACTLY)
-        setMeasuredDimension(width, height)
-    }
-
     private fun cloudsBitmap(): Bitmap {
         val height = cloud3.height + cloud2.height * 0.8f
         val result = Bitmap.createBitmap(cloud2.width, height.toInt(), Bitmap.Config.ARGB_8888)

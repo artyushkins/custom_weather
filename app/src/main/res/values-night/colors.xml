@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorBackground">@color/colorBlack</color>
-    <color name="colorFloatBackground">#1AFFFFFF</color>
+    <color name="colorBackground">#131313</color>
+    <color name="colorSurface">#0C0C0C</color>
+    <color name="colorTextHeader">#D8D8D8</color>
+
 </resources>

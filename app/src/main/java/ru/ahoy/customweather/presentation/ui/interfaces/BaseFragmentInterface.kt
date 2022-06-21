@@ -1,3 +1,9 @@
 package ru.ahoy.customweather.presentation.ui.interfaces
 
-interface BaseFragmentInterface
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleObserver
+
+interface BaseFragmentInterface {
+    val fragment: Fragment
+    var lifecycleObserver: LifecycleObserver?
+}
