@@ -11,12 +11,14 @@ import androidx.viewpager2.widget.ViewPager2
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.ahoy.customweather.databinding.FragmentWeatherViewpagerBinding
 import ru.ahoy.customweather.extension.viewBinding
+import ru.ahoy.customweather.presentation.ui.activity.MainActivityState
 import ru.ahoy.customweather.presentation.viewmodel.WeatherViewModel
 import ru.ahoy.domain.models.Weather
 
 class HorizontalViewPagerFragment : BaseFragment() {
 
     override val binding by viewBinding(FragmentWeatherViewpagerBinding::class)
+    override val activityState: MainActivityState get() = MainActivityState.MainWeatherScreen(this)
     override val fragment: Fragment get() = this
     private val viewModel by viewModel<WeatherViewModel>()
     private val viewPager: ViewPager2 by lazy { binding.viewPager }

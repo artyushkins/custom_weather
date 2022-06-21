@@ -8,6 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.ahoy.customweather.databinding.FragmentWeatherBinding
 import ru.ahoy.customweather.extension.viewBinding
+import ru.ahoy.customweather.presentation.ui.activity.MainActivityState
 import ru.ahoy.customweather.presentation.ui.interfaces.IWeatherFragment
 import ru.ahoy.customweather.presentation.ui.views.WeatherView
 import ru.ahoy.customweather.presentation.viewmodel.WeatherViewModel
@@ -29,6 +30,9 @@ class WeatherFragment : BaseFragment(), IWeatherFragment {
     override val binding by viewBinding(FragmentWeatherBinding::class)
     override val isStandalone: Boolean get() = arguments?.getString(key_name) != null
     override val fragment: Fragment get() = this
+    override val activityState: MainActivityState
+        get() = if (isStandalone) MainActivityState.DetailScreen(this) else MainActivityState.MainWeatherScreen(this)
+
     private val weather by lazy { Weather.fromJson(arguments?.getString(key_weather) ?: return@lazy null) }
     private val viewModel by viewModel<WeatherViewModel>()
 
@@ -41,7 +45,6 @@ class WeatherFragment : BaseFragment(), IWeatherFragment {
             lifecycleScope.launchWhenCreated {
                 viewModel.weather.collect { weather ->
                     weather?.let(this@WeatherFragment::initWeather)
-                    activity.onShowWeatherFromSearch()
                 }
             }
         }

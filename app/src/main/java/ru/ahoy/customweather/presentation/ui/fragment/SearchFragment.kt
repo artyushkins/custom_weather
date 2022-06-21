@@ -13,11 +13,13 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.ahoy.customweather.databinding.FragmentSearchBinding
 import ru.ahoy.customweather.extension.showFragment
 import ru.ahoy.customweather.extension.viewBinding
+import ru.ahoy.customweather.presentation.ui.activity.MainActivityState
 import ru.ahoy.customweather.presentation.ui.adapter.SearchAdapter
 import ru.ahoy.customweather.presentation.ui.interfaces.ISearchFragment
 import ru.ahoy.customweather.presentation.viewmodel.SearchViewModel
 
 class SearchFragment : BaseFragment(), ISearchFragment, SearchView.OnQueryTextListener {
+    override val activityState: MainActivityState get() = MainActivityState.SearchScreen(this)
     override val binding by viewBinding(FragmentSearchBinding::class)
     override val fragment: Fragment get() = this
     private val viewModel by viewModel<SearchViewModel>()

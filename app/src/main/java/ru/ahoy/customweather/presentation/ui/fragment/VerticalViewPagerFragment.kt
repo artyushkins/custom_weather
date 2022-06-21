@@ -11,6 +11,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import ru.ahoy.customweather.databinding.FragmentStubBinding
 import ru.ahoy.customweather.extension.viewBinding
+import ru.ahoy.customweather.presentation.ui.activity.MainActivityState
 import ru.ahoy.customweather.presentation.ui.interfaces.IVerticalViewPager
 import kotlin.math.abs
 
@@ -35,6 +36,7 @@ class VerticalViewPagerFragment : BaseFragment(), IVerticalViewPager {
 
     override val fragment: Fragment get() = this
     override val binding: ViewBinding by viewBinding(FragmentStubBinding::class) // Stub
+    override val activityState: MainActivityState get() = MainActivityState.None
     private val viewPager: ViewPager2 by lazy { ViewPager2(requireContext()) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {

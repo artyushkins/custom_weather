@@ -18,6 +18,24 @@
         app:layout_constraintBottom_toTopOf="@id/fragmentContainer"
         app:layout_constraintTop_toTopOf="parent">
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/mainBack"
+            style="?attr/borderlessButtonStyle"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            app:cornerRadius="16dp"
+            app:icon="@drawable/ic_back"
+            android:visibility="gone"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:iconTint="@color/colorTextHeader"
+            app:rippleColor="?attr/colorControlHighlight" />
+
         <androidx.appcompat.widget.SearchView
             android:id="@+id/searchView"
             style="@style/AppSearchView"
