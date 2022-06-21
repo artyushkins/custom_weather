@@ -1,55 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:background="@drawable/corners_default_ripple"
-    android:backgroundTint="@color/colorBackground"
+    android:layout_height="wrap_content"
     android:layout_marginHorizontal="16dp"
-    android:layout_marginTop="8dp"
-    android:padding="8dp"
-    android:layout_height="wrap_content">
+    android:layout_marginTop="16dp"
+    app:cardElevation="0dp"
+    app:cardCornerRadius="16dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="?attr/selectableItemBackgroundBorderless"
+    android:backgroundTint="@color/colorSurface"
+    android:padding="8dp">
 
-    <TextView
-        android:layout_marginTop="8dp"
-        android:id="@+id/city"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="16dp"
-        android:drawablePadding="4dp"
-        android:ellipsize="end"
-        android:fontFamily="@font/poppins_semibold"
-        android:includeFontPadding="false"
-        android:maxLines="1"
-        android:text="Saint-Petersburg"
-        android:textColor="@color/colorTextHeader"
-        android:textSize="20sp"
-        app:layout_constrainedWidth="true"
-        app:layout_constraintBottom_toTopOf="@id/tempLayout"
-        app:layout_constraintEnd_toStartOf="@+id/weatherView"
-        app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <include
-        android:id="@+id/tempLayout"
-        layout="@layout/include_temp_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/city" />
+        <TextView
+            android:id="@+id/city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:drawablePadding="4dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/poppins_semibold"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:text="Saint-Petersburg"
+            android:textColor="@color/colorTextHeader"
+            android:textSize="20sp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintBottom_toTopOf="@id/tempLayout"
+            app:layout_constraintEnd_toStartOf="@+id/weatherView"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
 
-    <ru.ahoy.customweather.presentation.ui.views.WeatherView
-        android:id="@+id/weatherView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:weather="sunny" />
+        <include
+            android:id="@+id/tempLayout"
+            layout="@layout/include_temp_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/city" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ru.ahoy.customweather.presentation.ui.views.WeatherView
+            android:id="@+id/weatherView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:weather="sunny" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

@@ -60,7 +60,26 @@
             app:icon="@drawable/ic_menu"
             app:iconGravity="textStart"
             app:iconPadding="0dp"
+            android:visibility="gone"
             app:iconTint="@color/colorTextHeader"
+            app:rippleColor="?attr/colorControlHighlight" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/mainAdd"
+            style="?attr/borderlessButtonStyle"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            app:cornerRadius="16dp"
+            android:visibility="gone"
+            app:icon="@drawable/ic_done"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:iconTint="@color/colorOnPrimary"
             app:rippleColor="?attr/colorControlHighlight" />
 
     </LinearLayout>

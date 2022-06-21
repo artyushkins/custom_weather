@@ -28,12 +28,13 @@ class WeatherFragment : BaseFragment(), IWeatherFragment {
     }
 
     override val binding by viewBinding(FragmentWeatherBinding::class)
-    override val isStandalone: Boolean get() = arguments?.getString(key_name) != null
+    override val isStandalone: Boolean get() = weatherName != null
     override val fragment: Fragment get() = this
     override val activityState: MainActivityState
-        get() = if (isStandalone) MainActivityState.DetailScreen(this) else MainActivityState.MainWeatherScreen(this)
+        get() = if (isStandalone) MainActivityState.DetailScreen.None else MainActivityState.MainWeatherScreen
 
     private val weather by lazy { Weather.fromJson(arguments?.getString(key_weather) ?: return@lazy null) }
+    private val weatherName by lazy { arguments?.getString(key_name) }
     private val viewModel by viewModel<WeatherViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -41,11 +42,38 @@ class WeatherFragment : BaseFragment(), IWeatherFragment {
         weather?.let { weather ->
             initWeather(weather)
         } ?: run {
-            viewModel.getWeatherByName(arguments?.getString(key_name))
-            lifecycleScope.launchWhenCreated {
-                viewModel.weather.collect { weather ->
-                    weather?.let(this@WeatherFragment::initWeather)
+            viewModel.getWeatherByName(weatherName)
+            viewModel.weather.value?.let(this@WeatherFragment::initWeather) ?: run {
+                lifecycleScope.launchWhenCreated {
+                    checkCityInStorage(viewModel.checkCityInStorage(weatherName))
+                    viewModel.weather.collect { weather ->
+                        weather?.let(this@WeatherFragment::initWeather)
+                    }
                 }
+            }
+        }
+    }
+
+    private fun checkCityInStorage(isCityInStorage: Boolean) {
+        if (isCityInStorage) {
+            setActivityState(MainActivityState.DetailScreen.AddWeather, true)
+        }
+    }
+
+    override fun addWeather() {
+        lifecycleScope.launchWhenResumed {
+            weatherName?.let { name ->
+                viewModel.saveWeather(name)
+                setActivityState(MainActivityState.DetailScreen.AddWeather, true)
+            }
+        }
+    }
+
+    override fun removeWeather() {
+        lifecycleScope.launchWhenResumed {
+            weatherName?.let { name ->
+                viewModel.removeWeather(name)
+                setActivityState(MainActivityState.DetailScreen.None, true)
             }
         }
     }
@@ -58,16 +86,7 @@ class WeatherFragment : BaseFragment(), IWeatherFragment {
         binding.uvText.text = weather.current?.uv.toString()
         binding.humidityText.text = weather.current?.humidity.toString()
         binding.rainText.text = weather.current?.precipMm.toString()
-        binding.weather.weather = getWeather(weather.current?.condition?.code)
-    }
-
-    private fun getWeather(code: Int?): Int {
-        return when (code) {
-            1000 -> WeatherView.SUNNY
-            1003 -> WeatherView.PARTLY_CLOUDY
-            1006, 1009 -> WeatherView.CLOUDY
-            else -> -1
-        }
+        binding.weather.weather = WeatherView.getWeather(weather.current?.condition?.code)
     }
 
 }

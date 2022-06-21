@@ -14,10 +14,19 @@ import ru.ahoy.customweather.R
 class WeatherView : androidx.appcompat.widget.AppCompatImageView {
 
     companion object {
-        const val SUNNY = 0
-        const val CLOUDY = 1
-        const val PARTLY_CLOUDY = 2
-        const val RAIN = -1
+        private const val SUNNY = 0
+        private const val CLOUDY = 1
+        private const val PARTLY_CLOUDY = 2
+        private const val RAIN = -1
+
+        fun getWeather(code: Int?): Int {
+            return when (code) {
+                1000 -> SUNNY
+                1003 -> PARTLY_CLOUDY
+                1006, 1009 -> CLOUDY
+                else -> -1
+            }
+        }
     }
 
     private lateinit var viewRect: RectF

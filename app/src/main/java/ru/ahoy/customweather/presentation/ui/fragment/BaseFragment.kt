@@ -38,4 +38,16 @@ abstract class BaseFragment : Fragment(), BaseFragmentInterface {
         lifecycleObserver?.let(lifecycle::removeObserver)
         super.onDestroyView()
     }
+
+    @JvmName("setActivityStateOverload")
+    fun setActivityState(state: MainActivityState, replace: Boolean) {
+        if (replace) {
+            activityStateFlow.dropLast {
+                activityStateFlow.state = state
+            }
+        } else {
+            activityStateFlow.state = state
+        }
+    }
+
 }

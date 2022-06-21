@@ -4,7 +4,7 @@ val allDependency = listOf(
     Kotlin.all,
     Lifecycle.all,
     AndroidX.all,
-    Libs.all
+    Libs.all,
 )
 
 object DI {
@@ -56,6 +56,16 @@ object AndroidX {
     const val material = "com.google.android.material:material:1.5.0-alpha04"
 
     val all = listOf(core, appCompat, material)
+}
+
+object Room {
+    private const val roomVersion = "2.4.2"
+
+    const val roomRuntime = "androidx.room:room-runtime:$roomVersion"
+    const val roomAnnotation = "androidx.room:room-compiler:$roomVersion"
+    const val roomCoroutines = "androidx.room:room-ktx:$roomVersion"
+
+    val all = listOf(roomRuntime, roomCoroutines)
 }
 
 object Libs {

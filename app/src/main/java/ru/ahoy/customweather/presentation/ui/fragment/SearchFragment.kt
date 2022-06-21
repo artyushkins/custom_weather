@@ -19,7 +19,12 @@ import ru.ahoy.customweather.presentation.ui.interfaces.ISearchFragment
 import ru.ahoy.customweather.presentation.viewmodel.SearchViewModel
 
 class SearchFragment : BaseFragment(), ISearchFragment, SearchView.OnQueryTextListener {
-    override val activityState: MainActivityState get() = MainActivityState.SearchScreen(this)
+
+    companion object {
+        fun newInstance(): SearchFragment = SearchFragment()
+    }
+
+    override val activityState: MainActivityState get() = MainActivityState.SearchScreen
     override val binding by viewBinding(FragmentSearchBinding::class)
     override val fragment: Fragment get() = this
     private val viewModel by viewModel<SearchViewModel>()
@@ -33,7 +38,6 @@ class SearchFragment : BaseFragment(), ISearchFragment, SearchView.OnQueryTextLi
         val adapter = SearchAdapter(isRecent = false, this::showWeatherFragment)
         binding.cities.adapter = adapter
         binding.cities.layoutManager = LinearLayoutManager(requireContext())
-        binding.cities.addItemDecoration(SearchItemDecoration())
         lifecycleScope.launchWhenResumed {
             viewModel.items.collect { items ->
                 adapter.items = items
@@ -62,31 +66,5 @@ class SearchFragment : BaseFragment(), ISearchFragment, SearchView.OnQueryTextLi
     override fun onQueryTextChange(query: String): Boolean {
         if (query.isNotEmpty()) viewModel.search(query)
         return false
-    }
-}
-
-class SearchItemDecoration : RecyclerView.ItemDecoration() {
-    override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
-        super.onDraw(c, parent, state)
-    }
-
-    override fun onDraw(c: Canvas, parent: RecyclerView) {
-        super.onDraw(c, parent)
-    }
-
-    override fun onDrawOver(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
-        super.onDrawOver(c, parent, state)
-    }
-
-    override fun onDrawOver(c: Canvas, parent: RecyclerView) {
-        super.onDrawOver(c, parent)
-    }
-
-    override fun getItemOffsets(outRect: Rect, itemPosition: Int, parent: RecyclerView) {
-        super.getItemOffsets(outRect, itemPosition, parent)
-    }
-
-    override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
-        super.getItemOffsets(outRect, view, parent, state)
     }
 }

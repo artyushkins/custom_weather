@@ -1,5 +1,6 @@
 package ru.ahoy.customweather.presentation.ui.activity
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -12,10 +13,10 @@ import ru.ahoy.customweather.R
 import ru.ahoy.customweather.databinding.ActivityMainBinding
 import ru.ahoy.customweather.extension.*
 import ru.ahoy.customweather.presentation.flow.MainActivityStateFlow
-import ru.ahoy.customweather.presentation.ui.fragment.BaseFragment
-import ru.ahoy.customweather.presentation.ui.fragment.VerticalViewPagerFragment
+import ru.ahoy.customweather.presentation.ui.fragment.CitiesFragment
+import ru.ahoy.customweather.presentation.ui.fragment.HorizontalViewPagerFragment
+import ru.ahoy.customweather.presentation.ui.fragment.SearchFragment
 import ru.ahoy.customweather.presentation.ui.interfaces.IMainActivity
-import ru.ahoy.customweather.presentation.ui.interfaces.IVerticalViewPager
 import ru.ahoy.customweather.presentation.ui.interfaces.IWeatherFragment
 
 /**
@@ -34,19 +35,21 @@ import ru.ahoy.customweather.presentation.ui.interfaces.IWeatherFragment
 
 open class ActivityState
 
-sealed class MainActivityState(val fragment: BaseFragment?): ActivityState() {
-    class MainWeatherScreen(fragment: BaseFragment) : MainActivityState(fragment)
-    class SearchScreen(fragment: BaseFragment) : MainActivityState(fragment)
-    class DetailScreen(fragment: BaseFragment) : MainActivityState(fragment)
-    class CitiesScreen(fragment: BaseFragment) : MainActivityState(fragment)
-    object None : MainActivityState(null)
+sealed class MainActivityState : ActivityState() {
+    object MainWeatherScreen : MainActivityState()
+    object SearchScreen : MainActivityState()
+    object CitiesScreen : MainActivityState()
+    object None : MainActivityState()
+    sealed class DetailScreen : MainActivityState() {
+        object AddWeather : DetailScreen()
+        object None : DetailScreen()
+    }
 }
 
 class MainActivity : AppCompatActivity(), IMainActivity {
 
     private val binding by viewBinding(ActivityMainBinding::class)
     private val searchView: SearchView by lazy { binding.searchView }
-    private val verticalViewPager by lazy { findFragment<IVerticalViewPager>() }
     private val activityStateFlow: MainActivityStateFlow by inject()
     private var activityState: ActivityState = MainActivityState.None
 
@@ -56,6 +59,18 @@ class MainActivity : AppCompatActivity(), IMainActivity {
         setContentView(binding.root)
         subscribeOnState()
         init(savedInstanceState)
+    }
+
+    override fun onBackPressed() {
+        if (activityState !is MainActivityState.MainWeatherScreen) {
+            closeFragment(activityStateFlow::dropLast)
+        } else {
+            super.onBackPressed()
+        }
+    }
+
+    override fun setQueryTextListener(listener: SearchView.OnQueryTextListener?) {
+        searchView.setOnQueryTextListener(listener)
     }
 
     private fun subscribeOnState() {
@@ -72,40 +87,54 @@ class MainActivity : AppCompatActivity(), IMainActivity {
         activityState = state
         when (state) {
             is MainActivityState.MainWeatherScreen -> {
-                binding.mainMenu.setIconResource(R.drawable.ic_menu)
-                binding.mainMenu.onClick { verticalViewPager.showCitiesFragment(show = true) }
-                binding.mainMenu.isVisible = true
                 binding.mainBack.isVisible = false
+                binding.mainMenu.isVisible = true
+                binding.mainMenu.onClick { showCitiesFragment() }
                 searchView.clearFocus()
+                binding.mainAdd.isVisible = false
+                binding.mainMenu.setIconResource(R.drawable.ic_menu)
             }
             is MainActivityState.SearchScreen -> {
-                binding.mainMenu.setIconResource(R.drawable.ic_close)
                 binding.mainBack.isVisible = true
+                binding.mainAdd.isVisible = false
                 binding.mainMenu.isVisible = false
             }
             is MainActivityState.DetailScreen -> {
-                binding.mainMenu.setIconResource(R.drawable.ic_launcher_foreground)
+                val fragment = findFragment<IWeatherFragment>()
                 binding.mainBack.isVisible = true
+                binding.mainAdd.isVisible = true
+                binding.mainMenu.isVisible = false
+                if (state == MainActivityState.DetailScreen.AddWeather) {
+                    binding.mainAdd.iconTint = ColorStateList.valueOf(getColor(R.color.colorWhite))
+                    binding.mainAdd.backgroundTintList = ColorStateList.valueOf(getColor(R.color.colorPositive))
+                    binding.mainAdd.onClick { fragment?.removeWeather() }
+                } else {
+                    binding.mainAdd.iconTint = ColorStateList.valueOf(getColor(R.color.colorOnSurface))
+                    binding.mainAdd.backgroundTintList = ColorStateList.valueOf(getColor(R.color.colorTransparent))
+                    binding.mainAdd.onClick { fragment?.addWeather() }
+                }
                 searchView.clearFocus()
             }
             is MainActivityState.CitiesScreen -> {
-                binding.mainMenu.setIconResource(R.drawable.ic_close)
-                binding.mainMenu.onClick { verticalViewPager.showCitiesFragment(show = false) }
                 binding.mainBack.isVisible = false
+                binding.mainMenu.setIconResource(R.drawable.ic_close)
+                binding.mainMenu.isVisible = true
+                binding.mainMenu.onClick { closeFragment(activityStateFlow::dropLast) }
                 searchView.clearFocus()
+                binding.mainAdd.isVisible = false
             }
-            else -> { }
+            is MainActivityState.None -> { }
         }
     }
 
     private fun init(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
             subscribeOnState()
-            showFragment(VerticalViewPagerFragment())
+            showRootFragment()
             binding.mainBack.onClick(this::onBackPressed)
             searchView.onFocused {
-                if (findFragment<IWeatherFragment>().isStandalone) {
-                    supportFragmentManager.popBackStack()
+                if (activityState is MainActivityState.DetailScreen) {
+                    closeFragment(activityStateFlow::dropLast)
                 } else {
                     showSearchFragment()
                 }
@@ -113,26 +142,16 @@ class MainActivity : AppCompatActivity(), IMainActivity {
         }
     }
 
-    override fun onBackPressed() {
-        if (activityState is MainActivityState.DetailScreen) {
-            (activityState as MainActivityState.DetailScreen).fragment?.let { fragment ->
-                supportFragmentManager.beginTransaction().remove(fragment).commit()
-                activityStateFlow.dropLast()
-            }
-        } else {
-            if (activityState !is MainActivityState.MainWeatherScreen) {
-                verticalViewPager.showRootFragment()
-            } else {
-                super.onBackPressed()
-            }
-        }
+    private fun showRootFragment() {
+        activityStateFlow.resetCache()
+        showFragment(HorizontalViewPagerFragment.newInstance())
+    }
+
+    private fun showCitiesFragment() {
+        showFragment(CitiesFragment.newInstance(), isAdd = true)
     }
 
     private fun showSearchFragment() {
-        verticalViewPager.showSearchFragment(show = true)
-    }
-
-    override fun setQueryTextListener(listener: SearchView.OnQueryTextListener?) {
-        searchView.setOnQueryTextListener(listener)
+        showFragment(SearchFragment.newInstance(), isAdd = true)
     }
 }

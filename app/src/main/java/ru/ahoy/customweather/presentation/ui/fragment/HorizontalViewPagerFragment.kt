@@ -12,15 +12,20 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.ahoy.customweather.databinding.FragmentWeatherViewpagerBinding
 import ru.ahoy.customweather.extension.viewBinding
 import ru.ahoy.customweather.presentation.ui.activity.MainActivityState
-import ru.ahoy.customweather.presentation.viewmodel.WeatherViewModel
+import ru.ahoy.customweather.presentation.viewmodel.CitiesViewModel
 import ru.ahoy.domain.models.Weather
+import kotlin.math.abs
 
 class HorizontalViewPagerFragment : BaseFragment() {
 
+    companion object {
+        fun newInstance(): HorizontalViewPagerFragment = HorizontalViewPagerFragment()
+    }
+
     override val binding by viewBinding(FragmentWeatherViewpagerBinding::class)
-    override val activityState: MainActivityState get() = MainActivityState.MainWeatherScreen(this)
+    override val activityState: MainActivityState get() = MainActivityState.MainWeatherScreen
     override val fragment: Fragment get() = this
-    private val viewModel by viewModel<WeatherViewModel>()
+    private val citiesViewModel by viewModel<CitiesViewModel>()
     private val viewPager: ViewPager2 by lazy { binding.viewPager }
     private var weatherList = listOf<Weather?>()
 
@@ -30,21 +35,26 @@ class HorizontalViewPagerFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        lifecycleScope.launchWhenStarted {
-            viewModel.getWeatherByIP()
-            viewModel.weather.collect {
-                weatherList = listOf(it)
-                initViewPager()
+        citiesViewModel.getCities()
+        lifecycleScope.launchWhenResumed {
+            citiesViewModel.cities.collect { cities ->
+                initViewPager(cities)
             }
         }
     }
 
-    private fun initViewPager() {
+    private fun initViewPager(cities: List<Weather>) {
+        weatherList = cities
         viewPager.adapter = ViewPagerAdapter()
         viewPager.overScrollMode = ViewPager2.OVER_SCROLL_NEVER
-        viewPager.setCurrentItem(VerticalFragment.Weather.position, false)
-        viewPager.setPageTransformer(VerticalViewPagerFragment.DepthPageTransformer())
+        viewPager.setPageTransformer(PageTransformer())
         binding.dotsIndicator.attachTo(viewPager)
+    }
+
+    class PageTransformer : ViewPager2.PageTransformer {
+        override fun transformPage(view: View, position: Float) {
+            view.alpha = 1 - abs(position)
+        }
     }
 
     inner class ViewPagerAdapter : FragmentStateAdapter(parentFragmentManager, lifecycle) {

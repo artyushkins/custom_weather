@@ -4,13 +4,15 @@
     <color name="colorWhite">#FFFFFFFF</color>
 
     <color name="colorPrimary">#001F70</color>
+    <color name="colorOnPrimary">#FFFFFF</color>
     <color name="colorBackground">#FFFFFF</color>
     <color name="colorSurface">#F8F8F8</color>
-    <color name="colorOnSurface">@color/colorWhite</color>
+    <color name="colorOnSurface">@color/colorBlack</color>
     <color name="colorText">#9A9A9A</color>
     <color name="colorTextHeader">#2C2C2C</color>
     <color name="colorTextSecondary">#C4C4C4</color>
     <color name="colorTransparent">#00000000</color>
+    <color name="colorPositive">#6EC156</color>
 
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>

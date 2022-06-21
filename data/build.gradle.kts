@@ -1,5 +1,6 @@
 plugins {
     id("com.android.library")
+    id("kotlin-kapt")
     kotlin("android")
     kotlin("android.extensions")
 }
@@ -31,6 +32,8 @@ android {
 
 dependencies {
     Network.all.forEach(::implementation)
+    Room.all.forEach(::implementation)
+    kapt(Room.roomAnnotation)
     implementation(project(mapOf("path" to ":domain")))
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
